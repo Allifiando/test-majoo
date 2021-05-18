@@ -40,9 +40,9 @@ func InitProductHandler(r *gin.RouterGroup, p productDomain.Entity, u userDomain
 	{
 		products.GET("/", middleware.Auth(handler.User), handler.GetListProductByOutletId)
 		products.GET("/id/:id", middleware.Auth(handler.User), handler.GetProductById)
-		products.POST("/", handler.CreateProduct)
-		products.PUT("/id/:id", handler.UpdateProduct)
-		products.DELETE("/id/:id", handler.DeleteProduct)
+		products.POST("/", middleware.Auth(handler.User), handler.CreateProduct)
+		products.PUT("/id/:id", middleware.Auth(handler.User), handler.UpdateProduct)
+		products.DELETE("/id/:id", middleware.Auth(handler.User), handler.DeleteProduct)
 	}
 }
 
