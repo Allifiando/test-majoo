@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 
@@ -55,8 +54,7 @@ func Auth(a userDomain.Entity) gin.HandlerFunc {
 		}
 
 		id := claims["id"].(float64)
-		_, err = a.GetUserById(c, int(id))
-		fmt.Println(err)
+		_, err = a.GetUserById(c, int64(id))
 		if err != nil {
 			errorParams["meta"] = map[string]interface{}{
 				"status":  401,

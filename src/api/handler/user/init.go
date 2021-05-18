@@ -25,9 +25,6 @@ func InitUserHandler(r *gin.RouterGroup, u userDomain.Entity) {
 		users.GET("/", middleware.Auth(handler.Entity), handler.GetListUser)
 		users.POST("/login", handler.Login)
 		users.POST("/", handler.Create)
-		// users.POST("/login", handler.Login)
-		// users.GET("/detail/:uuid", handler.GetDetailuser)
-		// users.GET("/check-code/:code", handler.GetCodeuser)
 		users.PUT("/id/:id", handler.Update)
 		users.DELETE("/id/:id", handler.Delete)
 	}
@@ -35,7 +32,7 @@ func InitUserHandler(r *gin.RouterGroup, u userDomain.Entity) {
 
 func (a *AppHandler) Home(c *gin.Context) {
 	params := map[string]interface{}{
-		"payload": gin.H{"message": "OK", "version": "2"},
+		"payload": gin.H{"message": "OK", "version": "1"},
 		"meta":    gin.H{"message": "OK"},
 	}
 	c.JSON(200, helpers.OutputAPIResponseWithPayload(params))

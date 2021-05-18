@@ -3,7 +3,6 @@ package userRepo
 import (
 	"context"
 	"database/sql"
-	"fmt"
 
 	userDomain "test-majoo/src/domain/user"
 )
@@ -37,7 +36,6 @@ func (m *userRepo) GetListUser(ctx context.Context, offset, limit int, search, s
 	}
 
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	defer rows.Close()
@@ -45,7 +43,6 @@ func (m *userRepo) GetListUser(ctx context.Context, offset, limit int, search, s
 		d := userDomain.User{}
 		err = rows.Scan(&d.ID, &d.Username, &d.Email, &d.Name, &d.Role)
 		if err != nil {
-			fmt.Println(err)
 			return
 		}
 		res = append(res, d)
@@ -65,7 +62,6 @@ func (m *userRepo) GetListUser(ctx context.Context, offset, limit int, search, s
 		err = m.Conn.QueryRow(query).Scan(&count)
 	}
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	return
@@ -79,13 +75,12 @@ func (m *userRepo) Login(ctx context.Context, b userDomain.Login) (data userDoma
 		&data.RoleId)
 
 	if err != nil {
-		fmt.Println(err)
 		return data, err
 	}
 	return
 }
 
-func (m *userRepo) GetUserById(ctx context.Context, id int) (res userDomain.User, err error) {
+func (m *userRepo) GetUserById(ctx context.Context, id int64) (res userDomain.User, err error) {
 	query := `SELECT id, username, email, name, role_id FROM users WHERE id = ?`
 	err = m.Conn.QueryRow(query, id).Scan(&res.ID, &res.Username, &res.Email, &res.Name, &res.Role)
 	if err != nil {
@@ -98,9 +93,7 @@ func (m *userRepo) Create(ctx context.Context, b userDomain.SetUser) (err error)
 	query := `INSERT INTO users(username,email,name,password,role_id) 
 	VALUES(?,?,?,?,?)`
 	stmt, err := m.db.PrepareContext(ctx, query)
-	fmt.Println(b)
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	_, err = stmt.ExecContext(ctx,
@@ -111,7 +104,6 @@ func (m *userRepo) Create(ctx context.Context, b userDomain.SetUser) (err error)
 		b.Role,
 	)
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 	return

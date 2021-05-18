@@ -6,7 +6,7 @@ import (
 	userDomain "test-majoo/src/domain/user"
 )
 
-func (a *UserEntity) GetListUser(c context.Context, offset, limit int, search, sort string) (res []userDomain.User, count int, err error) {
+func (a *userEntity) GetListUser(c context.Context, offset, limit int, search, sort string) (res []userDomain.User, count int, err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 
@@ -18,7 +18,7 @@ func (a *UserEntity) GetListUser(c context.Context, offset, limit int, search, s
 	return
 }
 
-func (a *UserEntity) Login(c context.Context, b userDomain.Login) (res userDomain.UserLogin, err error) {
+func (a *userEntity) Login(c context.Context, b userDomain.Login) (res userDomain.UserLogin, err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 
@@ -30,7 +30,7 @@ func (a *UserEntity) Login(c context.Context, b userDomain.Login) (res userDomai
 	return
 }
 
-func (a *UserEntity) GetUserById(c context.Context, id int) (res userDomain.User, err error) {
+func (a *userEntity) GetUserById(c context.Context, id int64) (res userDomain.User, err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 
@@ -43,7 +43,7 @@ func (a *UserEntity) GetUserById(c context.Context, id int) (res userDomain.User
 	return
 }
 
-func (a *UserEntity) Create(c context.Context, b userDomain.SetUser) (err error) {
+func (a *userEntity) Create(c context.Context, b userDomain.SetUser) (err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 
@@ -55,7 +55,7 @@ func (a *UserEntity) Create(c context.Context, b userDomain.SetUser) (err error)
 	return
 }
 
-func (a *UserEntity) Update(c context.Context, b userDomain.SetUser, id int) (err error) {
+func (a *userEntity) Update(c context.Context, b userDomain.SetUser, id int) (err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 
@@ -67,7 +67,7 @@ func (a *UserEntity) Update(c context.Context, b userDomain.SetUser, id int) (er
 	return
 }
 
-func (a *UserEntity) Delete(c context.Context, id int) (err error) {
+func (a *userEntity) Delete(c context.Context, id int) (err error) {
 	ctx, cancel := context.WithTimeout(c, a.timeout)
 	defer cancel()
 

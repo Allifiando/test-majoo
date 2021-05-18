@@ -10,6 +10,10 @@ import (
 	_userHandler "test-majoo/src/api/handler/user"
 	_userRepo "test-majoo/src/api/repo/user"
 
+	_productEntity "test-majoo/src/api/entity/product"
+	_productHandler "test-majoo/src/api/handler/product"
+	_productRepo "test-majoo/src/api/repo/product"
+
 	"test-majoo/src/config"
 	"test-majoo/src/middleware"
 
@@ -45,6 +49,9 @@ func main() {
 	userRepo := _userRepo.InitUserRepo(db)
 	userEntity := _userEntity.InitUserEntity(userRepo, timeoutContext)
 
+	productRepo := _productRepo.InitProductRepo(db)
+	productEntity := _productEntity.InitProductEntity(productRepo, timeoutContext)
+
 	r := gin.Default()
 	if os.Getenv("ENV") != "local" {
 		r.Use(middleware.CORSMiddleware())
@@ -53,6 +60,7 @@ func main() {
 	api := r.Group("/")
 
 	_userHandler.InitUserHandler(api, userEntity)
+	_productHandler.InitProductHandler(api, productEntity, userEntity)
 
 	r.Run(":" + port)
 }
